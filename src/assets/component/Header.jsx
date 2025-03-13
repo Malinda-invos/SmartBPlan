@@ -5,8 +5,8 @@ const Header = () => {
   return (
     <div className="flex justify-between items-center p-4 ">
       <div>
-        <h1 className="text-xs">Welcome back</h1>
-        <p className="text-xl font-semibold">MY3</p>
+        <h1 className="text-xs">Welcome back !</h1>
+        <p className="text-lg font-semibold text-gray-400">Nevil Kularatne</p>
       </div>
       <div className="flex items-center space-x-5">
         <div className="hidden md:flex">

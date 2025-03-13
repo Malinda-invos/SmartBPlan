@@ -6,8 +6,9 @@ const SideBar = () => {
   const sideBar = [
     { id: 1, path: "/", name: "DashBoard", icon: LuBox },
     { id: 2, path: "/in", name: "Incomes", icon: LuUser },
-    { id: 3, path: "/Bu", name: "Budgets", icon: LuCalendar },
+
     { id: 4, path: "/ex", name: "Expenses", icon: LuCalendar },
+    { id: 3, path: "/Bu", name: "Budgets", icon: LuCalendar },
   ];
 
   const [active, setActive] = React.useState(1);
@@ -18,10 +19,18 @@ const SideBar = () => {
 
   return (
     <div className="w-16 md:w-56 left-0 top-0 h-screen  fixed pt-8 px-4">
-      <div></div>
-      <h1 className="text-2xl font-bold text-blue-600 underline decoration-dotted decoration-4">
-        SmartPlanB
-      </h1>
+      <div>
+        <Link>
+          {" "}
+          <h1
+            to={"/"}
+            className="text-2xl font-bold text-blue-600 underline decoration-dotted decoration-4"
+          >
+            SmartPlanB
+          </h1>
+        </Link>
+      </div>
+
       <ul className="mt-6 space-y-6">
         {sideBar.map((menu) => (
           <Link
@@ -30,7 +39,7 @@ const SideBar = () => {
             onClick={() => handleClick(menu.id)}
           >
             <li
-              className={`font-medium rounded-md py-2 px-4 cursor-pointer 
+              className={`font-medium rounded-md py-4 px-4 cursor-pointer 
                    hover:bg-gray-100 hover:text-indigo-500 ${
                      active === menu.id ? "bg-blue-200 text-gray-900" : ""
                    }`}

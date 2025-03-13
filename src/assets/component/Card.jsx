@@ -1,5 +1,4 @@
 import React from "react";
-import { FaWallet, FaMoneyBillWave, FaHandHoldingUsd } from "react-icons/fa";
 
 const Card = ({ title, amount, date, icon }) => {
   return (
