@@ -1,6 +1,7 @@
 import React from "react";
 import DataTable from "react-data-table-component";
 import { FaPlus } from "react-icons/fa";
+import { SlArrowDown } from "react-icons/sl";
 
 const Income = () => {
   const columns = [
@@ -56,11 +57,18 @@ const Income = () => {
         </h1>
       </div>
       <div className="flex items-center justify-between mb-3 grid grid-cols-5 gap-4 ">
-        <select class=" block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline">
-          <option>Select Option</option>
-          <option>Option 2</option>
-          <option>Option 3</option>
-        </select>
+        <div class="relative w-full">
+          <select class="block w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline appearance-none">
+            <option>Select Category</option>
+            <option>Option 2</option>
+            <option>Option 3</option>
+          </select>
+
+          <div class="absolute inset-y-0 right-2 flex items-center px-2 pointer-events-none">
+            <SlArrowDown />
+          </div>
+        </div>
+
         <input
           placeholder="amount"
           class="block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline"

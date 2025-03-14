@@ -1,17 +1,63 @@
-import React from "react";
+import { React, useEffect, useState } from "react";
 import DataTable from "react-data-table-component";
 import { FaPlus } from "react-icons/fa";
+import { SlArrowDown } from "react-icons/sl";
+import { Timestamp } from "firebase/firestore";
+import { db } from "../config/firebase";
+import {
+  getDocs,
+  collection,
+  addDoc,
+  deleteDoc,
+  doc,
+  updateDoc,
+} from "firebase/firestore";
 
 const Expenses = () => {
+  const [category, setCategory] = useState("");
+  const [amount, setAmount] = useState("");
+  const [ex, setEx] = useState([]);
+
+  const exCollectionRef = collection(db, "expenses");
+
+  useEffect(() => {
+    const getEX = async () => {
+      try {
+        const data = await getDocs(exCollectionRef);
+        const filtereddata = data.docs.map((doc) => ({
+          ...doc.data(),
+          id: doc.id,
+        }));
+        setEx(filtereddata);
+        console.log(filtereddata);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    getEX();
+  }, []);
+
+  const createMovie = async () => {
+    try {
+      await addDoc(exCollectionRef, {
+        amount: amount,
+        category: category,
+        data: Timestamp.now(),
+      });
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   const columns = [
     {
       name: "Date",
-      selector: (row) => row.date,
+      selector: (row) => null,
       sortable: true,
     },
     {
       name: "Category",
-      selector: (row) => row.description,
+      selector: (row) => row.category,
       sortable: true,
     },
     {
@@ -47,6 +93,11 @@ const Expenses = () => {
     { date: "2025-03-04", description: "Utilities", amount: "78,500.00" },
     { date: "2025-03-05", description: "Transport", amount: "54,000.00" },
   ];
+
+  const submitEx = () => {
+    alert("Category: " + category + " Amount: " + amount);
+  };
+
   return (
     <div className="bg-blue-50 h-full px-10">
       <div className="py-4   mb-6">
@@ -55,17 +106,34 @@ const Expenses = () => {
         </h1>
       </div>
       <div className="flex items-center justify-between mb-3 grid grid-cols-5 gap-4 ">
-        <select class=" block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline">
-          <option>Select Category</option>
-          <option>Option 2</option>
-          <option>Option 3</option>
-        </select>
+        <div class="relative w-full">
+          <select
+            onChange={(e) => setCategory(e.target.value)}
+            value={category}
+            class="block w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline appearance-none"
+          >
+            <option>Select Category</option>
+            <option>Food</option>
+            <option>Transport</option>
+            <option>Shopping</option>
+            <option>Utilities</option>
+          </select>
+
+          <div class="absolute inset-y-0 right-2 flex items-center px-2 pointer-events-none">
+            <SlArrowDown />
+          </div>
+        </div>
         <input
           placeholder="amount"
+          onChange={(e) => setAmount(e.target.value)}
+          value={amount}
           class="block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline"
         />
 
-        <button class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded inline-flex items-center">
+        <button
+          class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded inline-flex items-center"
+          onClick={createMovie}
+        >
           <span className="flex items-center ">
             <FaPlus className="mr-2" />
             Add expense
@@ -76,7 +144,7 @@ const Expenses = () => {
       <div className=" w-[1200px] bg-white mt-20  rounded-lg p-6">
         <DataTable
           columns={columns}
-          data={data}
+          data={ex}
           customStyles={{
             headCells: {
               style: {

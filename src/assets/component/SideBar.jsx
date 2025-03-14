@@ -8,7 +8,7 @@ const SideBar = () => {
     { id: 2, path: "/in", name: "Incomes", icon: LuUser },
 
     { id: 4, path: "/ex", name: "Expenses", icon: LuCalendar },
-    { id: 3, path: "/Bu", name: "Budgets", icon: LuCalendar },
+    // { id: 3, path: "/Bu", name: "Budgets", icon: LuCalendar },
   ];
 
   const [active, setActive] = React.useState(1);
